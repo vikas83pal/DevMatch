@@ -18,12 +18,8 @@ public class Config {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/register").permitAll()  // Allow access to /register
-                .anyRequest().authenticated()  // Require authentication for other endpoints
-            )
-            .csrf(csrf -> csrf.disable()); // Disable CSRF for simplicity (not recommended for production)
-            // .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/"));  // Enable OAuth2 login with a default success URL
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())  // Allow all requests
+            .csrf(csrf -> csrf.disable());  // Disable CSRF for simplicity
 
         return http.build();
     }

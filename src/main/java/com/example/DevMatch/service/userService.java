@@ -24,4 +24,17 @@ public class userService {
         return userRepo.save(user);
     }
 
+    public User login(String email, String password) {
+        if (email == null || email.isEmpty()) {
+            throw new RuntimeException("Email cannot be null or empty");
+        }
+        User user = userRepo.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+        return user;
+    }
 }
